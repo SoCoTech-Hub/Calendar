@@ -16,7 +16,7 @@ dependencies:
     version: 1.11.0
   '@t3-oss/env-nextjs':
     specifier: ^0.7.1
-    version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+    version: 0.7.1(typescript@5.3.3)(zod@3.23.0-canary.20231004T224911)
   '@tanstack/react-query':
     specifier: ^4.36.1
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -51,8 +51,8 @@ dependencies:
     specifier: ^2.2.1
     version: 2.2.1
   zod:
-    specifier: ^3.22.4
-    version: 3.22.4
+    specifier: 3.23.0-canary.20231004T224911
+    version: 3.23.0-canary.20231004T224911
 
 devDependencies:
   '@next/eslint-plugin-next':
@@ -565,7 +565,7 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@t3-oss/env-core@0.7.1(typescript@5.3.3)(zod@3.22.4):
+  /@t3-oss/env-core@0.7.1(typescript@5.3.3)(zod@3.23.0-canary.20231004T224911):
     resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
     peerDependencies:
       typescript: '>=4.7.2'
@@ -575,10 +575,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.3.3
-      zod: 3.22.4
+      zod: 3.23.0-canary.20231004T224911
     dev: false
 
-  /@t3-oss/env-nextjs@0.7.1(typescript@5.3.3)(zod@3.22.4):
+  /@t3-oss/env-nextjs@0.7.1(typescript@5.3.3)(zod@3.23.0-canary.20231004T224911):
     resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
     peerDependencies:
       typescript: '>=4.7.2'
@@ -587,9 +587,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.7.1(typescript@5.3.3)(zod@3.22.4)
+      '@t3-oss/env-core': 0.7.1(typescript@5.3.3)(zod@3.23.0-canary.20231004T224911)
       typescript: 5.3.3
-      zod: 3.22.4
+      zod: 3.23.0-canary.20231004T224911
     dev: false
 
   /@tanstack/query-core@4.36.1:
@@ -2624,3 +2624,8 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: true
+
+  /zod@3.23.0-canary.20231004T224911:
+    resolution: {integrity: sha512-cLuOoJJp4/oXwGtaZeP9zX+KbgdrtMN3cZkPIaBCSmxqoODuCPsZr5RkKH61C1LZGiHWylpGq7BFhlhEwzGhsQ==}
+    dev: false
