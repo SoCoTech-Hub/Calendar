@@ -1,3 +1,4 @@
+"use client";
 import { Fragment, useEffect, useRef } from "react";
 import {
   ChevronDownIcon,
@@ -11,12 +12,12 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export function WeeklyCalendar() {
   const container = useRef<HTMLDivElement>(null);
   const containerNav = useRef<HTMLDivElement>(null);
   const containerOffset = useRef<HTMLDivElement>(null);
 
-   useEffect(() => {
+  useEffect(() => {
     // Set the container scroll position based on the current time.
     const currentMinute = new Date().getHours() * 60;
     if (container.current) {

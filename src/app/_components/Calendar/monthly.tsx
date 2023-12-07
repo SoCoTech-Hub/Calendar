@@ -1,3 +1,4 @@
+"use client";
 import { Fragment, useState } from "react";
 import {
   ChevronDownIcon,
@@ -157,7 +158,7 @@ function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function MonthlyCalendar() {
   const [selectedDay, setSelectedDay] =
     useState<SelectedDay>(initialSelectedDay);
 
