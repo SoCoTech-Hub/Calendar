@@ -4,9 +4,9 @@ import { Event } from "../Calendar/monthly";
 
 interface AddEventModalProps {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void; //are we sure this needs to be void?
+  setIsOpen: (isOpen: boolean) => void;
   eventList: Event[]; // Change the type to Event[]
-  setEventList: (event: Event[]) => void; //are we sure this needs to be void?
+  setEventList: (event: Event[]) => void;
   forum: ReactNode;
 }
 
