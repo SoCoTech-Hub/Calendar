@@ -88,7 +88,7 @@ const days: Day[] = [
     events: [
       {
         id: 6,
-        name: "Sam's birthday party",
+        name: "Sa's birthday party",
         time: "2PM",
         datetime: "2024-01-25T14:00",
         href: "#",
@@ -162,6 +162,7 @@ export default function MonthlyCalendar() {
   const [selectedDay, setSelectedDay] =
     useState<SelectedDay>(initialSelectedDay);
 
+  const [isAddEventModalOpen, setAddEventModalOpen] = useState(false);
   const updateDate = (e: unknown) => {
     console.log(e);
     setSelectedDay({
@@ -183,7 +184,22 @@ export default function MonthlyCalendar() {
       ],
     });
   };
+  const openAddEventModal = () => {
+    setAddEventModalOpen(true);
+  };
 
+  const closeAddEventModal = () => {
+    setAddEventModalOpen(false);
+  };
+  const handleAddEvent = (event: Event) => {
+    // Add the new event to the selected day's events
+    setSelectedDay({
+      events: [...selectedDay.events, event],
+    });
+
+    // Close the modal
+    closeAddEventModal();
+  };
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
@@ -305,6 +321,7 @@ export default function MonthlyCalendar() {
             <div className="ml-6 h-6 w-px bg-gray-300" />
             <button
               type="button"
+              onClick={() => openAddEventModal()}
               className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Add event
@@ -552,6 +569,19 @@ export default function MonthlyCalendar() {
           </div>
         </div>
       </div>
+      {/* Add Event Modal */}
+      {isAddEventModalOpen ? (
+        <div
+          onClick={() => closeAddEventModal()}
+          className="text-black-400 bg-indigo-700 px-4 py-2"
+        >
+          Hello World
+        </div>
+      ) : (
+        <div className="bg-amber-950 px-4 py-2 text-purple-400">
+          Hello Peter
+        </div>
+      )}
       {selectedDay?.events ? (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
           <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
