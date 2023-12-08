@@ -4,9 +4,9 @@ import { Event } from "../Calendar/monthly";
 
 interface AddEventModalProps {
   isOpen: boolean;
-  setIsOpen(isOpen: boolean): void;
+  setIsOpen: (isOpen: boolean) => void; //are we sure this needs to be void?
   eventList: Event[]; // Change the type to Event[]
-  setEventList(event: Event[]): void;
+  setEventList: (event: Event[]) => void; //are we sure this needs to be void?
   forum: ReactNode;
 }
 
@@ -22,7 +22,6 @@ const AddEventModal = (props: AddEventModalProps) => {
       datetime: "string",
       href: "string",
       // ... other properties
-}
     };
 
     // Add the new event to the selected day's events
@@ -33,7 +32,9 @@ const AddEventModal = (props: AddEventModalProps) => {
   };
 
   return isOpen ? (
-    <div className={isOpen ? "text-black-400 bg-indigo-700 px-4 py-2" : "hidden"}>
+    <div
+      className={isOpen ? "text-black-400 bg-indigo-700 px-4 py-2" : "hidden"}
+    >
       <button
         onClick={() => props.setIsOpen(!isOpen)}
         className="rounded-full bg-blue-500 text-white"
@@ -80,6 +81,3 @@ export default AddEventModal;
 //     </div>
 //   );
 // };
-
-
-

@@ -7,6 +7,7 @@ import {
   EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
+import ViewButton from "../AddEvents/ViewButton";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -32,8 +33,8 @@ export function WeeklyCalendar() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-none items-center justify-between border-b border-gray-200 px-6 py-4">
-        <h1 className="text-base font-semibold leading-6 text-gray-900">
+      <header className="flex flex-none items-center justify-between border-b border-gray-200 bg-slate-600 px-6 py-4">
+        <h1 className="indent-left text-base font-semibold leading-6 text-black">
           <time dateTime="2024-01">January 2022</time>
         </h1>
         <div className="flex items-center">
@@ -83,68 +84,9 @@ export function WeeklyCalendar() {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm",
-                          )}
-                        >
-                          Day view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm",
-                          )}
-                        >
-                          Week view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm",
-                          )}
-                        >
-                          Month view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm",
-                          )}
-                        >
-                          Year view
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
+                  <Menu.Item>
+                    <ViewButton url="/" label="Monthly View" />
+                  </Menu.Item>
                 </Menu.Items>
               </Transition>
             </Menu>
@@ -248,25 +190,15 @@ export function WeeklyCalendar() {
                           "block px-4 py-2 text-sm",
                         )}
                       >
-                        Month view
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block px-4 py-2 text-sm",
-                        )}
-                      >
                         Year view
                       </a>
                     )}
                   </Menu.Item>
+
+                  <Menu.Item>
+                    <ViewButton url="/" label="Monthly View" />
+                  </Menu.Item>
+                  
                 </div>
               </Menu.Items>
             </Transition>
@@ -565,7 +497,6 @@ export function WeeklyCalendar() {
                 </div>
                 <div />
               </div>
-
               {/* Vertical lines */}
               <div className="col-start-1 col-end-2 row-start-1 hidden grid-cols-7 grid-rows-1 divide-x divide-gray-100 sm:grid sm:grid-cols-7">
                 <div className="col-start-1 row-span-full" />
@@ -577,8 +508,16 @@ export function WeeklyCalendar() {
                 <div className="col-start-7 row-span-full" />
                 <div className="col-start-8 row-span-full w-8" />
               </div>
-
-              {/* Events */}
+              <ol
+                className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
+                style={{
+                  gridTemplateRows: "1.75rem repeat(288, minmax(0, 1fr)) auto",
+                  overflowY: "auto", // Add this line to make the events section scrollable
+                }}
+              >
+                {/* ... (events) */}
+              </ol>
+              ;{/* Events */}
               <ol
                 className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
                 style={{
