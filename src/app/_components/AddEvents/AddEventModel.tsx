@@ -11,7 +11,7 @@ interface AddEventModalProps {
 }
 
 const AddEventModal = (props: AddEventModalProps) => {
-  const { forum, isOpen, setIsOpen, eventList, setEventList } = props;
+  const { forum,isOpen,setIsOpen,eventList,setEventList } = props;
 
   const handleAddEvent = () => {
     // Create a new Event object with id as a number
@@ -51,6 +51,7 @@ const AddEventModal = (props: AddEventModalProps) => {
     </div>
   ) : null;
 };
+
 export default AddEventModal;
 // const AddEventModal = ({label,isOpen,onClose,onAddEvent}:AddEventModalProps) => {
 //   return (

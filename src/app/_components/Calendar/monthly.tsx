@@ -10,6 +10,10 @@ import {
 import { Menu, Transition } from "@headlessui/react";
 import AddEventModal from "../AddEvents/AddEventModel";
 import ViewButton from "../AddEvents/ViewButton";
+import { time } from "drizzle-orm/mysql-core"
+import EventForum from "../AddEvents/EventForum"; 
+
+
 
 export interface Event {
   id: number;
@@ -143,7 +147,7 @@ const days: Day[] = [
     events: [
       {
         id: 7,
-        name: "Cinema with friends",
+        name: "Cinnabon day!",
         time: "9PM",
         datetime: "2024-02-04T21:00",
         href: "#",
@@ -196,7 +200,8 @@ export default function MonthlyCalendar() {
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
-      <header className="flex items-center justify-between border-b border-white bg-green-400 px-6 py-4 lg:flex-none">
+      <header className="flex items-right justify-between border-b border-white bg-gray-600 px-6 py-4 lg:flex-none">
+
         <h1 className="text-base font-semibold leading-6 text-black">
           <time dateTime="2024-01">January 2024</time>
         </h1>
@@ -430,8 +435,9 @@ export default function MonthlyCalendar() {
           </div>
         </div>
       </div>
+      
       <AddEventModal
-        forum={"Label goes here"}
+        forum={<EventForum />}
         isOpen={isAddEventModalOpen}
         setIsOpen={setAddEventModalOpen}
         eventList={eventList}

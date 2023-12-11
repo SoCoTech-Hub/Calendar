@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import ViewButton from "../AddEvents/ViewButton";
+//import  AddEventForum from "../AddEvents/AddEventForum";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -22,6 +23,11 @@ export function WeeklyCalendar() {
     // Set the container scroll position based on the current time.
     const currentMinute = new Date().getHours() * 60;
     if (container.current) {
+      container.current.style.height = "630px";
+      container.current.style.width = "1290px";
+      //container.current.style.paddingTop = '10%';
+      //container.current.style.paddingBottom = '10%';
+      //<div class="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
       container.current.scrollTop =
         ((container.current.scrollHeight -
           (containerNav.current?.offsetHeight ?? 0) -
@@ -33,15 +39,18 @@ export function WeeklyCalendar() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-none items-center justify-between border-b border-gray-200 bg-slate-600 px-6 py-4">
-        <h1 className="indent-left text-base font-semibold leading-6 text-black">
+      <header className="flex items-center justify-between border-b border-white bg-gray-600 px-6 py-4 lg:flex-none">
+        <h1 className="indent-center text-base font-semibold leading-6 text-black">
           <time dateTime="2024-01">January 2022</time>
         </h1>
-        <div className="flex items-center">
+        <div
+          className="items-right 
+        flex"
+        >
           <div className="relative flex items-center rounded-md bg-white shadow-sm md:items-stretch">
             <button
               type="button"
-              className="flex h-9 w-12 items-center justify-center rounded-l-md border-y border-l border-gray-300 pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50"
+              className="flex h-9 w-12 items-center justify-right rounded-l-md border-y border-l border-gray-300 pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50"
             >
               <span className="sr-only">Previous week</span>
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
@@ -198,7 +207,6 @@ export function WeeklyCalendar() {
                   <Menu.Item>
                     <ViewButton url="/" label="Monthly View" />
                   </Menu.Item>
-                  
                 </div>
               </Menu.Items>
             </Transition>
