@@ -1,27 +1,33 @@
+import React from "react";
 import Link from "next/link";
 
-
-const ViewButton = ({
-  label,
-  url,
-  onClick,
-  className
-}: {
+interface ViewButtonProps {
+  url: string;
   label: string;
-  url?: string;
-    onClick?: () => void;
-  className?:string
+  onClick?: () => void;
+  className?: string;
+}
+
+const ViewButton: React.FC<ViewButtonProps> = ({
+  url,
+  label,
+  onClick,
+  className,
 }) => {
-  return onClick ? (
-    <button
-      onClick={onClick}
-      className={className?className:"block bg-white px-4 py-2 text-sm text-black"}
-    >
-      {label}
-    </button>
-  ) : (
-    <Link href={url ? url : "/"} className={className?className:"block bg-white px-4 py-2 text-sm text-black"} passHref>
-      {label}
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  return (
+    <Link href={url} passHref>
+      <button
+        onClick={handleClick}
+        className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${className}`}
+      >
+        {label}
+      </button>
     </Link>
   );
 };

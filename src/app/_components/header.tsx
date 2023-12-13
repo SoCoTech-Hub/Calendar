@@ -205,10 +205,9 @@ export default function Header({
 
           <div className="ml-6 h-6 w-px bg-gray-300" />
           <ViewButton
-            onClick={() => setIsOpen(!isOpen)}
-            label="Create Event"
-            className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          />
+                      onClick={() => setIsOpen(!isOpen)}
+                      label="Create Event"
+                      className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" url={""}          />
         </div>
         <Menu as="div" className="relative ml-6 md:hidden">
           <Menu.Button className="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500">
@@ -230,22 +229,18 @@ export default function Header({
                 <Menu.Item>
                   <ViewButton
                     onClick={() => setIsOpen(!isOpen)}
-                    label="Create Event"
-                  />
+                    label="Create Event" url={""}                  />
                 </Menu.Item>
               </div>
               <div className="py-1">
-                <Menu.Item>
-                  <ViewButton url="#" label="Go To Today" />
-                </Menu.Item>
-              </div>
-              <div className="py-1">
-                <Menu.Item>
-                  <ViewButton url="/weekly" label="Weekly View" />
-                </Menu.Item>
-                <Menu.Item>
-                  <ViewButton url="/" label="Monthly View" />
-                </Menu.Item>
+                <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Item>
+                    <ViewButton url="/" label="Monthly View" />
+                  </Menu.Item>
+                  <Menu.Item>
+                    <ViewButton url="/weekly" label="Weekly View" />
+                  </Menu.Item>
+                </Menu.Items>
               </div>
             </Menu.Items>
           </Transition>
