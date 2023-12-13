@@ -1,7 +1,6 @@
-import React,{ useState } from "react";
-import type { ReactNode } from "react"
+import React, { useState, lazy, Suspense } from "react";
+import type { ReactNode } from "react";
 import type { Event } from "../Calendar/monthly";
-
 
 interface AddEventModalProps {
   isOpen: boolean;
@@ -12,8 +11,14 @@ interface AddEventModalProps {
   forum: ReactNode;
 }
 
-const AddEventModal = (props: AddEventModalProps) => {
-  const { forum, isOpen, setIsOpen, onAddEvent } = props;
+const LazyEventForum = lazy(() => import("../AddEvents/EventForum"));
+
+const AddEventModal: React.FC<AddEventModalProps> = ({
+  isOpen,
+  setIsOpen,
+  onAddEvent,
+  forum,
+}) => {
   const [newEvent, setNewEvent] = useState<Event>({
     id: 0,
     name: "",
@@ -35,7 +40,10 @@ const AddEventModal = (props: AddEventModalProps) => {
       >
         x
       </button>
-      {forum}
+      <Suspense fallback={<div>Loading...</div>}>
+        {forum}
+        <LazyEventForum />
+      </Suspense>
       <button
         onClick={handleAddEvent}
         className="rounded-full bg-blue-500 text-white"

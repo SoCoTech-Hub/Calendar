@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
@@ -5,29 +6,110 @@ import {
   ChevronRightIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
-import { type Dispatch, Fragment, type SetStateAction } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import ViewButton from "./AddEvents/ViewButton";
 import { usePathname } from "next/navigation";
 
-export default function Header({ isOpen,setIsOpen }:{isOpen:boolean,setIsOpen:Dispatch<SetStateAction<boolean>>}
-        ) {
+interface HeaderProps {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// Define getWeekNumber at the top
+const getWeekNumber = (date: Date) => {
+  const today = new Date(date);
+  const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+  const pastDaysOfYear =
+    (today.valueOf() - firstDayOfYear.valueOf()) / 86400000;
+  return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+};
+
+export default function Header({
+  isOpen,
+  setIsOpen, currentDate, setCurrentDate 
+}: {
+  isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
+    currentDate: Date; setCurrentDate: Dispatch<SetStateAction<Date>>
+}) {
   const pathname = usePathname();
-  
+
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    currentDate.getMonth(),
+  );
+  const [currentWeek, setCurrentWeek] = useState<number>(
+    getWeekNumber(currentDate),
+  );
+
+  useEffect(() => {
+    const getCurrentDate = (date: Date) => {
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "long",
+      };
+      return date.toLocaleDateString("en-za", options);
+    };
+
+    setCurrentDate(new Date());
+  }, []);
+
+  const handlePrevMonthClick = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = (prevMonth - 1)<-1?12: prevMonth -1;
+      const newDate = new Date(currentDate);
+      newDate.setMonth(newMonth);
+      setCurrentDate(newDate);
+      console.log({newMonth})
+      return newMonth;
+    });
+  };
+
+  const handleNextMonthClick = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = (prevMonth + 1) >12?0: prevMonth +1;
+      const newDate = new Date(currentDate);
+      newDate.setMonth(newMonth);
+      setCurrentDate(newDate);
+      return newMonth;
+    });
+  };
+
+  const handlePrevWeekClick = () => {
+    setCurrentWeek((prevWeek) => prevWeek - 1);
+  };
+
+  const handleNextWeekClick = () => {
+    setCurrentWeek((prevWeek) => prevWeek + 1);
+  };
+  const getCurrentDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+    };
+    return date.toLocaleDateString("en-za", options);
+  };
+
   return (
     <header className="flex items-center justify-between border-b border-white bg-gray-600 px-6 py-4 lg:flex-none">
       <h1 className="indent-center text-base font-semibold leading-6 text-black">
-        <time dateTime="2024-01">January 2022</time>
+        <time dateTime={currentDate.toISOString()}>
+          {getCurrentDate(currentDate)}
+        </time>
       </h1>
-      <div
-        className="items-right 
-        flex"
-      >
+      <div className="items-right flex">
         <div className="relative flex items-center rounded-md bg-white shadow-sm md:items-stretch">
           <button
             type="button"
             className="justify-right flex h-9 w-12 items-center rounded-l-md border-y border-l border-gray-300 pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50"
+            onClick={
+              pathname === "/weekly"
+                ? handlePrevWeekClick
+                : handlePrevMonthClick
+            }
           >
-            <span className="sr-only">Previous week</span>
+            <span className="sr-only">{`Previous ${
+              pathname === "/weekly" ? "week" : "month"
+            }`}</span>
             <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
@@ -40,8 +122,15 @@ export default function Header({ isOpen,setIsOpen }:{isOpen:boolean,setIsOpen:Di
           <button
             type="button"
             className="flex h-9 w-12 items-center justify-center rounded-r-md border-y border-r border-gray-300 pl-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pl-0 md:hover:bg-gray-50"
+            onClick={
+              pathname === "/weekly"
+                ? handleNextWeekClick
+                : handleNextMonthClick
+            }
           >
-            <span className="sr-only">Next week</span>
+            <span className="sr-only">{`Next ${
+              pathname === "/weekly" ? "week" : "month"
+            }`}</span>
             <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
@@ -106,8 +195,11 @@ export default function Header({ isOpen,setIsOpen }:{isOpen:boolean,setIsOpen:Di
           )}
 
           <div className="ml-6 h-6 w-px bg-gray-300" />
-          <ViewButton onClick={ ()=>setIsOpen(!isOpen)} label="Create Event" className='ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'/>
-
+          <ViewButton
+            onClick={() => setIsOpen(!isOpen)}
+            label="Create Event"
+            className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          />
         </div>
         <Menu as="div" className="relative ml-6 md:hidden">
           <Menu.Button className="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500">
@@ -127,7 +219,10 @@ export default function Header({ isOpen,setIsOpen }:{isOpen:boolean,setIsOpen:Di
             <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-1">
                 <Menu.Item>
-                  <ViewButton onClick={ ()=>setIsOpen(!isOpen)} label="Create Event" />
+                  <ViewButton
+                    onClick={() => setIsOpen(!isOpen)}
+                    label="Create Event"
+                  />
                 </Menu.Item>
               </div>
               <div className="py-1">

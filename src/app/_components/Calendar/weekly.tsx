@@ -4,7 +4,7 @@ import { ClockIcon } from "@heroicons/react/20/solid";
 import Header from "../header";
 import AddEventModal from "../AddEvents/AddEventModel";
 import EventForum from "../AddEvents/EventForum";
-import TimeLine from "../timeline"
+import TimeLine from "../timeline";
 
 export interface Event {
   id: number;
@@ -26,33 +26,35 @@ export default function MonthlyCalendar() {
   const [eventList, setEventList] = useState<Event[]>([]);
   const [selectedDay, setSelectedDay] =
     useState<SelectedDay>(initialSelectedDay);
+  const [isAddEventModalOpen, setAddEventModalOpen] = useState(false);
+
+  // Sample refs, adjust based on your DOM structure
   const container = useRef<HTMLDivElement>(null);
   const containerNav = useRef<HTMLDivElement>(null);
   const containerOffset = useRef<HTMLDivElement>(null);
-  const [isAddEventModalOpen, setAddEventModalOpen] = useState(false);
-
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   useEffect(() => {
     const currentMinute = new Date().getHours() * 60;
-    if (container.current) {
-        
-        container.current.scrollTop =
-        ((container.current.scrollHeight -
-          (containerNav.current?.offsetHeight ?? 0) -
-          (containerOffset.current?.offsetHeight ?? 0)) *
-          currentMinute) /
-        1440;
+    if (container.current && containerNav.current && containerOffset.current) {
+      const { scrollHeight } = container.current;
+      const navHeight = containerNav.current.offsetHeight ?? 0;
+      const offsetHeight = containerOffset.current.offsetHeight ?? 0;
+      container.current.scrollTop =
+        ((scrollHeight - navHeight - offsetHeight) * currentMinute) / 1440;
     }
-  }, []);
+  }, [container, containerNav, containerOffset]);
 
-  const updateDate = (e: unknown) => {
-    console.log(e);
+  const updateDate = (date: Date) => {
+    date = date || new Date();
+    const formattedDate = date.toISOString();
+
     setSelectedDay({
       events: [
         {
           id: 1,
           name: "asdasdasd",
           time: "20:47",
-          datetime: new Date().toISOString(),
+          datetime: formattedDate,
           href: "#",
         },
         {
@@ -67,17 +69,21 @@ export default function MonthlyCalendar() {
   };
 
   return (
-    <div className="flex w-4/5 flex-col" style={{height : "80vh"}}
-    >
-      <Header isOpen={isAddEventModalOpen} setIsOpen={setAddEventModalOpen} />
-      <TimeLine/>
+    <div className="flex w-4/5 flex-col" style={{ height: "80vh" }}>
+      <Header
+        isOpen={isAddEventModalOpen}
+        setIsOpen={setAddEventModalOpen}
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+      />
+      <TimeLine currentWeekStartDate={ currentDate} />
       <AddEventModal
         forum={<EventForum />}
         isOpen={isAddEventModalOpen}
         setIsOpen={setAddEventModalOpen}
         eventList={eventList}
-        setEventList={setEventList} // Ensure setEventList is typed for Event[]
-        onAddEvent={function (newEvent: Event): void {
+        setEventList={setEventList}
+        onAddEvent={(newEvent: Event): void => {
           console.log(newEvent);
         }}
       />
