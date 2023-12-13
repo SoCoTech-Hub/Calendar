@@ -26,11 +26,14 @@ const getWeekNumber = (date: Date) => {
 
 export default function Header({
   isOpen,
-  setIsOpen, currentDate, setCurrentDate 
+  setIsOpen,
+  currentDate,
+  setCurrentDate,
 }: {
   isOpen: boolean;
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
-    currentDate: Date; setCurrentDate: Dispatch<SetStateAction<Date>>
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  currentDate: Date;
+  setCurrentDate: Dispatch<SetStateAction<Date>>;
 }) {
   const pathname = usePathname();
 
@@ -55,18 +58,17 @@ export default function Header({
 
   const handlePrevMonthClick = () => {
     setCurrentMonth((prevMonth) => {
-      const newMonth = (prevMonth - 1)<-1?12: prevMonth -1;
+      const newMonth = prevMonth - 1 < 0 ? 11 : prevMonth - 1;
       const newDate = new Date(currentDate);
       newDate.setMonth(newMonth);
       setCurrentDate(newDate);
-      console.log({newMonth})
       return newMonth;
     });
   };
 
   const handleNextMonthClick = () => {
     setCurrentMonth((prevMonth) => {
-      const newMonth = (prevMonth + 1) >12?0: prevMonth +1;
+      const newMonth = prevMonth + 1 > 11 ? 0 : prevMonth + 1;
       const newDate = new Date(currentDate);
       newDate.setMonth(newMonth);
       setCurrentDate(newDate);
@@ -76,11 +78,18 @@ export default function Header({
 
   const handlePrevWeekClick = () => {
     setCurrentWeek((prevWeek) => prevWeek - 1);
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() - 7);
+    setCurrentDate(newDate);
   };
 
   const handleNextWeekClick = () => {
     setCurrentWeek((prevWeek) => prevWeek + 1);
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() + 7);
+    setCurrentDate(newDate);
   };
+
   const getCurrentDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
