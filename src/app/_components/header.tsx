@@ -44,38 +44,41 @@ export default function Header({
     getWeekNumber(currentDate),
   );
 
-  useEffect(() => {
-    const getCurrentDate = (date: Date) => {
-      const options: Intl.DateTimeFormatOptions = {
-        year: "numeric",
-        month: "long",
-      };
-      return date.toLocaleDateString("en-za", options);
+ useEffect(() => {
+  const getCurrentDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
     };
-
+    return date.toLocaleDateString("en-za", options);
+  };
+  if (!currentDate) {
     setCurrentDate(new Date());
-  }, []);
-
+  }
+}, []);
   const handlePrevMonthClick = () => {
-    setCurrentMonth((prevMonth) => {
-      const newMonth = prevMonth - 1 < 0 ? 11 : prevMonth - 1;
-      const newDate = new Date(currentDate);
-      newDate.setMonth(newMonth);
-      setCurrentDate(newDate);
-      return newMonth;
-    });
-  };
+  setCurrentMonth((prevMonth) => {
+    const newMonth = prevMonth - 1 < 0 ? 11 : prevMonth - 1;
+    const newYear = newMonth === 11 ? currentDate.getFullYear() - 1 : currentDate.getFullYear();
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newMonth);
+    newDate.setFullYear(newYear);
+    setCurrentDate(newDate);
+    return newMonth;
+  });
+};
 
-  const handleNextMonthClick = () => {
-    setCurrentMonth((prevMonth) => {
-      const newMonth = prevMonth + 1 > 11 ? 0 : prevMonth + 1;
-      const newDate = new Date(currentDate);
-      newDate.setMonth(newMonth);
-      setCurrentDate(newDate);
-      return newMonth;
-    });
-  };
-
+const handleNextMonthClick = () => {
+  setCurrentMonth((prevMonth) => {
+    const newMonth = prevMonth + 1 > 11 ? 0 : prevMonth + 1;
+    const newYear = newMonth === 0 ? currentDate.getFullYear() + 1 : currentDate.getFullYear();
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newMonth);
+    newDate.setFullYear(newYear);
+    setCurrentDate(newDate);
+    return newMonth;
+  });
+};
   const handlePrevWeekClick = () => {
     setCurrentWeek((prevWeek) => prevWeek - 1);
     const newDate = new Date(currentDate);
